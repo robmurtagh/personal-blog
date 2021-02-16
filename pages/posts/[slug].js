@@ -2,33 +2,53 @@ import fs from "fs";
 import matter from "gray-matter";
 import hydrate from "next-mdx-remote/hydrate";
 import renderToString from "next-mdx-remote/render-to-string";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import path from "path";
-import CustomLink from "../../components/CustomLink";
 import Layout from "../../components/Layout";
+import Highlight, { defaultProps } from "prism-react-renderer";
+import theme from "prism-react-renderer/themes/nightOwl";
 import { postFilePaths, POSTS_PATH } from "../../utils/mdxUtils";
 
-// Custom components/renderers to pass to MDX.
-// Since the MDX files aren't loaded by webpack, they have no knowledge of how
-// to handle import statements. Instead, you must include components in scope
-// here.
+/**
+ * Documented here:
+ * https://mdxjs.com/getting-started#table-of-components
+ */
 const components = {
-  a: CustomLink,
-  ul: BulletPoints,
-  // It also works with dynamically-imported components, which is especially
-  // useful for conditionally loading components for certain routes.
-  // See the notes in README.md for more details.
-  TestComponent: dynamic(() => import("../../components/TestComponent")),
+  a: ({ as, href, ...otherProps }) => (
+    <Link as={as} href={href}>
+      <a {...otherProps} />
+    </Link>
+  ),
+  img: ({ src, alt }) => <img src={src} alt={alt} className="w-full" />,
+  code: Code,
+  // Conditional loading example (`import dynamic from "next/dynamic";`):
+  // TestComponent: dynamic(() => import("../../components/TestComponent")),
   Head,
 };
 
-function BulletPoints({ children }) {
-  return <ul className="list-disc">{children}</ul>;
+function Code({ className, children }) {
+  const languageClass = className.split(" ").find((x) => x.startsWith("language-")) || "";
+  const language = languageClass.replace("language-", "");
+
+  return (
+    <Highlight {...defaultProps} theme={theme} code={children} language={language}>
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <pre className={`overflow-x-scroll p-4 ${className}`} style={style}>
+          {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span {...getTokenProps({ token, key })} />
+              ))}
+            </div>
+          ))}
+        </pre>
+      )}
+    </Highlight>
+  );
 }
 
-export default function PostPage({ source, frontMatter }) {
+const PostPage = ({ source, frontMatter }) => {
   const content = hydrate(source, { components });
   return (
     <Layout>
@@ -39,29 +59,18 @@ export default function PostPage({ source, frontMatter }) {
           </Link>
         </nav>
       </header>
-      <div className="post-header">
-        <h1>{frontMatter.title}</h1>
-        {frontMatter.description && (
-          <p className="description">{frontMatter.description}</p>
-        )}
-      </div>
-      <main>{content}</main>
-
-      <style jsx>{`
-        .post-header h1 {
-          margin-bottom: 0;
-        }
-
-        .post-header {
-          margin-bottom: 2rem;
-        }
-        .description {
-          opacity: 0.6;
-        }
-      `}</style>
+      <article class="prose prose-blue">
+        <header>
+          <h1>{frontMatter.title}</h1>
+          <h4 className="italic">{frontMatter.description}</h4>
+        </header>
+        <main>{content}</main>
+      </article>
     </Layout>
   );
-}
+};
+
+export default PostPage;
 
 export const getStaticProps = async ({ params }) => {
   const postFilePath = path.join(POSTS_PATH, `${params.slug}.mdx`);
