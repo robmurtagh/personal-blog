@@ -1,6 +1,7 @@
 ---
 title: Trying out ReasonML and Revery
 description: Using the React approach to build a true native application with ReasonML
+date: "2020-06-07"
 ---
 
 Building a large web application is arguably easier than ever. Tools like [create-react-app](https://create-react-app.dev/) make it easy to start a production-grade web application in minutes. But the story for building native applications that can be installed on your machine is pretty different. [Electron](https://www.electronjs.org/) provides one way of doing this, but at the cost of packaging an entire web browser for running your HTML, CSS and Javascript. I wanted to try out an alternative called [Revery](https://www.outrunlabs.com/revery/), which lets you use a familiar 'React' development style, but compile your app to a native executable.
@@ -37,13 +38,13 @@ esy build && esy run
 
 On the first build this will do quite a lot of work, but subsequently this should be _super_ quick. You might even be able to speed this up by [pre-installing some packages](https://github.com/revery-ui/revery/wiki/Building-&-Installing) If all goes we'll you should now be looking at a simple quickstart application:
 
-![Revery Quickstart Launch](https://dev-to-uploads.s3.amazonaws.com/i/8u3u1roz6f1c7w91ysqp.png)
+![Screenshot of a simple Mac app with a blue button and a click counter](/1-revery-quickstart.png)
 
 ## Getting started
 
 The first thing I like to do when working with a new stack is to log something. Literally anything will do. We're working in ReasonML, and [rtop](https://github.com/reasonml/reason-cli) is a great tool for playing around locally, and finding out what functions we should be using. `print_endline` seems to do the job:
 
-![rtop](https://dev-to-uploads.s3.amazonaws.com/i/6j2cpec4jv1yyb627hoq.png)
+![Screenshot of a Terminal running the rtop command line](/1-terminal-rtop.png)
 
 In our Revery project `App.re` is the critical file, so it's worth starting there, making some edits, and adding some logs. Digging around further in the codebase, we can see they're already using the [timber](https://github.com/glennsl/timber) logging framework, so we can get that up and running with:
 
@@ -105,7 +106,7 @@ module TodoList = {
 
 In the screenshot you can see how the app is running from the dock, and has the menu bar as you'd expect:
 
-![controlled component](https://dev-to-uploads.s3.amazonaws.com/i/4nvyvm9p1oh2eta6vdks.png)
+![Screenshot of a minimal native Mac application running from the dock](/1-controlled-component.png)
 
 Next up I want to be able to store my list of todo items. Here's some code that on every button click adds an item to the list:
 

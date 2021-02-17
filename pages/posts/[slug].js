@@ -59,7 +59,7 @@ const PostPage = ({ source, frontMatter }) => {
           </Link>
         </nav>
       </header>
-      <article class="prose prose-blue">
+      <article className="prose prose-blue">
         <header>
           <h1>{frontMatter.title}</h1>
           <h4 className="italic">{frontMatter.description}</h4>
