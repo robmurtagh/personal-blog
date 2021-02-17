@@ -5,7 +5,6 @@ import renderToString from "next-mdx-remote/render-to-string";
 import Head from "next/head";
 import Link from "next/link";
 import path from "path";
-import Layout from "../../components/Layout";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import theme from "prism-react-renderer/themes/nightOwl";
 import { postFilePaths, POSTS_PATH } from "../../utils/mdxUtils";
@@ -51,9 +50,9 @@ function Code({ className, children }) {
 const PostPage = ({ source, frontMatter }) => {
   const content = hydrate(source, { components });
   return (
-    <Layout>
+    <div className="max-w-prose mx-auto px-4">
       <header>
-        <nav>
+        <nav className="mt-4 mb-8">
           <Link href="/">
             <a>👈 Go back home</a>
           </Link>
@@ -66,7 +65,7 @@ const PostPage = ({ source, frontMatter }) => {
         </header>
         <main>{content}</main>
       </article>
-    </Layout>
+    </div>
   );
 };
 
