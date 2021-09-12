@@ -1,7 +1,7 @@
 import fs from "fs";
 import matter from "gray-matter";
-import hydrate from "next-mdx-remote/hydrate";
-import renderToString from "next-mdx-remote/render-to-string";
+import { MDXRemote } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
 import Head from "next/head";
 import Link from "next/link";
 import path from "path";
@@ -48,7 +48,6 @@ function Code({ className, children }) {
 }
 
 const PostPage = ({ source, frontMatter }) => {
-  const content = hydrate(source, { components });
   return (
     <div className="max-w-prose mx-auto px-4">
       <header>
@@ -63,13 +62,13 @@ const PostPage = ({ source, frontMatter }) => {
           <h1>{frontMatter.title}</h1>
           <h4 className="italic">{frontMatter.description}</h4>
         </header>
-        <main>{content}</main>
+        <main>
+          <MDXRemote {...source} components={components} />
+        </main>
       </article>
     </div>
   );
 };
-
-export default PostPage;
 
 export const getStaticProps = async ({ params }) => {
   const postFilePath = path.join(POSTS_PATH, `${params.slug}.mdx`);
@@ -77,8 +76,7 @@ export const getStaticProps = async ({ params }) => {
 
   const { content, data } = matter(source);
 
-  const mdxSource = await renderToString(content, {
-    components,
+  const mdxSource = await serialize(content, {
     // Optionally pass remark/rehype plugins
     mdxOptions: {
       remarkPlugins: [],
@@ -107,3 +105,5 @@ export const getStaticPaths = async () => {
     fallback: false,
   };
 };
+
+export default PostPage;
