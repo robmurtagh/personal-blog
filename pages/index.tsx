@@ -6,7 +6,26 @@ import path from "path";
 import SphereAnimation from "../components/SphereAnimation";
 import { postFilePaths, POSTS_PATH } from "../utils/mdxUtils";
 
-export default function Index({ posts }) {
+/**
+ * A type representing a parsed `mdx` blog post file
+ */
+export type BlogPost = {
+  /** The file name, for example `YYYY-MM-DD-foo.mdx` */
+  filePath,
+  /** The raw content of the article as a string */
+  content,
+  /** The frontmatter parsed as an object. Type of this object is by convention only */
+  data: {
+    title: string;
+    description: string;
+    date: string;
+  },
+}
+
+/**
+ * Primary landing page
+ */
+export default function Index({ posts }: { posts: BlogPost[] }) {
   return (
     <>
       <Head>
@@ -45,7 +64,10 @@ export default function Index({ posts }) {
   );
 }
 
-export function getStaticProps() {
+/**
+ * Pre-render this page at build-time with these props
+ */
+export const getStaticProps = () => {
   const posts = postFilePaths.map((filePath) => {
     const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
     const { content, data } = matter(source);
