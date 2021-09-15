@@ -37,7 +37,7 @@ export default function Index({ posts }: { posts: BlogPost[] }) {
           <SphereAnimation className="m-8" />
           <div className="m-8 flex flex-col justify-center">
             <h1 className="font-bold text-5xl md:text-6xl mb-3">Welcome 👋</h1>
-            <p className="prose prose-blue">I'm Rob, and I'm a Software Engineer</p>
+            <p className="prose prose-blue">{"I'm Rob, and I'm a Software Engineer"}</p>
             <p className="prose prose-blue">
               You can find me on <a href="https://github.com/robmurtagh">Github</a> and{" "}
               <a href="https://twitter.com/rjmurtagh">Twitter</a>
