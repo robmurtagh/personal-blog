@@ -1,7 +1,11 @@
-const SphereAnimation = ({ className }) => (
-  <div style={{ height: "200px", width: "200px" }} className={className}>
-    <style>
-      {`
+/**
+ * A CSS spinning circles animation
+ */
+export default function SphereAnimation({ className }: { className: string }) {
+  return (
+    <div style={{ height: "200px", width: "200px" }} className={className}>
+      <style>
+        {`
       body {
           background-color: white;
       }
@@ -41,13 +45,12 @@ const SphereAnimation = ({ className }) => (
           50% {transform:rotate3d(1,0,0,180deg)}
           100%{transform:rotate3d(1,0,0,360deg)}
       }`}
-    </style>
-    <div className="disc" style={{ animationName: "rotate1", animationDuration: "3.2s" }}></div>
-    <div className="disc" style={{ animationName: "rotate2", animationDuration: "4.3s" }}></div>
-    <div className="disc" style={{ animationName: "rotate3", animationDuration: "3.5s" }}></div>
-    <div className="disc" style={{ animationName: "rotate4", animationDuration: "3.8s" }}></div>
-    <div className="disc" style={{ animationName: "rotate5", animationDuration: "4.2s" }}></div>
-  </div>
-);
-
-export default SphereAnimation;
+      </style>
+      <div className="disc" style={{ animationName: "rotate1", animationDuration: "3.2s" }}></div>
+      <div className="disc" style={{ animationName: "rotate2", animationDuration: "4.3s" }}></div>
+      <div className="disc" style={{ animationName: "rotate3", animationDuration: "3.5s" }}></div>
+      <div className="disc" style={{ animationName: "rotate4", animationDuration: "3.8s" }}></div>
+      <div className="disc" style={{ animationName: "rotate5", animationDuration: "4.2s" }}></div>
+    </div>
+  );
+}

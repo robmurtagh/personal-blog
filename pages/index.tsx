@@ -3,29 +3,50 @@ import matter from "gray-matter";
 import Head from "next/head";
 import Link from "next/link";
 import path from "path";
-import SphereAnimation from "../components/SphereAnimation";
-import { postFilePaths, POSTS_PATH } from "../utils/mdxUtils";
+import SphereAnimation from "@/components/SphereAnimation";
+import { postFilePaths, POSTS_PATH } from "@/utils/mdxUtils";
 
-/**
- * A type representing a parsed `mdx` blog post file
- */
+/** The frontmatter parsed as an object. Type of this object is by convention only */
+export type BlogPostFrontMatter = {
+  /** Title as specified by user */
+  title: string;
+  /** Description as specified by user */
+  description: string;
+  /** Typically passed as e.g. `2020-06-07` */
+  date: string;
+};
+
+/** Represents the parsed `mdx` blog post file */
 export type BlogPost = {
   /** The file name, for example `YYYY-MM-DD-foo.mdx` */
-  filePath,
+  filePath;
   /** The raw content of the article as a string */
-  content,
+  content;
   /** The frontmatter parsed as an object. Type of this object is by convention only */
-  data: {
-    title: string;
-    description: string;
-    date: string;
-  },
-}
+  data: BlogPostFrontMatter;
+};
+
+/** The `Props` for the main page */
+type IndexProps = { posts: BlogPost[] };
 
 /**
- * Primary landing page
+ * Statically render this page at build-time with these props:
+ * https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation
  */
-export default function Index({ posts }: { posts: BlogPost[] }) {
+export const getStaticProps = (): { props: IndexProps } => {
+  const posts = postFilePaths.map((filePath) => {
+    const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
+    const { content, data } = matter(source);
+    return { content, data, filePath } as BlogPost;
+  });
+
+  return { props: { posts } };
+};
+
+/**
+ * Primary landing page of the site
+ */
+export default function Index({ posts }: IndexProps) {
   return (
     <>
       <Head>
@@ -62,22 +83,4 @@ export default function Index({ posts }: { posts: BlogPost[] }) {
       </div>
     </>
   );
-}
-
-/**
- * Pre-render this page at build-time with these props
- */
-export const getStaticProps = () => {
-  const posts = postFilePaths.map((filePath) => {
-    const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
-    const { content, data } = matter(source);
-
-    return {
-      content,
-      data,
-      filePath,
-    };
-  });
-
-  return { props: { posts } };
 }
