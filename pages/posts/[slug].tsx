@@ -5,10 +5,11 @@ import { serialize } from "next-mdx-remote/serialize";
 import Head from "next/head";
 import Link from "next/link";
 import path from "path";
-import Code from "@/components/Code";
 import { postFilePaths, POSTS_PATH } from "@/utils/mdxUtils";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { BlogPostFrontMatter } from "..";
+import Code from "@/components/Code";
+import VideoAutoplay from "@/components/VideoAutoplay";
 
 /**
  * This is a map which is passed to `MDXRemote`. Every time a
@@ -33,6 +34,7 @@ const components: Record<string, React.ReactNode> = {
   ),
   img: ({ src, alt }) => <img src={src} alt={alt} className="w-full" />,
   code: Code,
+  VideoAutoplay,
 };
 
 /**
