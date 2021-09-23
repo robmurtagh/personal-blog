@@ -4,4 +4,72 @@ description: ""
 date: "2020-06-07"
 ---
 
-<BlockMath math="L = \frac{1}{2} \rho v^2 S C_L" />
+Eigenvectors are a really interesting concept with a wide variety of applications. I originally learnt about them while [studying Physics](http://hyperphysics.phy-astr.gsu.edu/hbase/quantum/eigen.html); then a few years ago they came up again in the context of [Principle Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) (PCA), a Data Science technique.
+
+In my experience, it's easy to miss the fundamental concept behind eigenvectors due to the formalism with which they are discussed. (You might have found the same if you clicked on either of the two links above 👆). And so here I wanted to capture my own limited mental model; focusing on an intuition for what's happening, rather than anything formal.
+
+## What is a matrix?
+
+Here is a (square, two-dimensional) matrix, <InlineMath math="A" />:
+
+<BlockMath
+  math="A=\begin{pmatrix}
+   2 & 1 \\
+   2 & 3
+\end{pmatrix}"
+/>
+
+A matrix can be thought of as a transformation on vectors in space. That's because, given a vector <InlineMath math="\vec{a}" />:
+
+<BlockMath
+  math="\vec{a}=\begin{pmatrix}
+   1 \\
+   1 
+\end{pmatrix}"
+/>
+
+It can be transformed by applying some matrix to it:
+
+<BlockMath
+  math="\vec{b}=A \cdot \vec{a}=\begin{pmatrix}
+   2 & 1 \\
+   2 & 3
+\end{pmatrix} \cdot \begin{pmatrix}
+   1 \\
+   1 
+\end{pmatrix} = \begin{pmatrix}
+   2 \cdot 1 + 1 \cdot 1 \\
+   2 \cdot 1 + 3 \cdot 1 
+\end{pmatrix} = \begin{pmatrix}
+   3 \\
+   5 
+\end{pmatrix}"
+/>
+
+The new vector <InlineMath math="\vec{b}" /> is called the _dot product_ of the matrix and the original vector. And here's what the transformation process looks like:
+
+<VideoAutoplay src="/1-transforming-a-vector.mp4" />
+
+## What is an eigenvector?
+
+Well first of all, let's imagine applying this matrix to every possible vector in a space. Here's one example of what that might look like:
+
+<VideoAutoplay src="/2-transforming-all-vectors.mp4" />
+
+Hopefully, looking at this, it's quite easy to notice that _in some directions the vector is only stretched_.
+
+<VideoAutoplay src="/2-transforming-all-vectors.mp4" />
+
+These directions are called the eigenvectors of the matrix.
+
+## An intuition
+
+<Panel>
+
+A matrix can be thought of as similar to a lens or a prism; looking through it distorts space. If you imagine letting
+a lens rotate in front of you, then there will be certain directions in which you see the world as _stretched_, but
+not _skewed_. Those directions are a property of the lens, and we call them eigenvectors.
+
+</Panel>
+
+I purposefully haven't mentioned how to calculate an eigenvector in practice, or why it would be useful to do so! But I hope that this small recap might help keep a picture in your head if you're ever working with eigenvectors in the future.

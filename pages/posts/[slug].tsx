@@ -11,6 +11,7 @@ import { postFilePaths, POSTS_PATH } from "@/utils/mdxUtils";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { BlogPostFrontMatter } from "..";
 import Code from "@/components/Code";
+import Panel from "@/components/Panel";
 import VideoAutoplay from "@/components/VideoAutoplay";
 
 /**
@@ -37,7 +38,9 @@ const components: Record<string, React.ReactNode> = {
   img: ({ src, alt }) => <img src={src} alt={alt} className="w-full" />,
   code: Code,
   VideoAutoplay,
+  InlineMath: dynamic(() => import("react-katex").then((mod) => mod.InlineMath)),
   BlockMath: dynamic(() => import("react-katex").then((mod) => mod.BlockMath)),
+  Panel,
 };
 
 /**
@@ -107,7 +110,7 @@ export default function PostPage({ source, frontMatter }: PostPageProps) {
             </Link>
           </nav>
         </header>
-        <article className="prose prose-blue">
+        <article className="prose prose-blue mb-20">
           <header>
             <h1>{frontMatter.title}</h1>
             <h4 className="italic">{frontMatter.description}</h4>
