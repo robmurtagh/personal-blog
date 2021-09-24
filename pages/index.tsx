@@ -3,6 +3,7 @@ import matter from "gray-matter";
 import Head from "next/head";
 import Link from "next/link";
 import path from "path";
+import TypedText from "@/components/TypedText";
 import SphereAnimation from "@/components/SphereAnimation";
 import { postFilePaths, POSTS_PATH } from "@/utils/mdxUtils";
 
@@ -53,28 +54,47 @@ export default function Index({ posts }: IndexProps) {
         <title>Welcome 👋</title>
         <link rel="shortcut icon" href="/favicon.png" />
       </Head>
-      <div className="container mx-auto">
-        <div className="flex flex-row flex-wrap">
+      <div className="max-w-xl mx-auto">
+        <div className="flex flex-column flex-wrap pt-10">
           <SphereAnimation className="m-8" />
           <div className="m-8 flex flex-col justify-center">
             <h1 className="font-bold text-5xl md:text-6xl mb-3">Welcome 👋</h1>
-            <p className="prose prose-blue">{"I'm Rob, and I'm a Software Engineer"}</p>
-            <p className="prose prose-blue">
-              You can find me on <a href="https://github.com/robmurtagh">Github</a> and{" "}
-              <a href="https://twitter.com/rjmurtagh">Twitter</a>
-            </p>
-            <p className="prose prose-blue">
-              (and I used to keep some notes on <a href="http://wiki.robmurtagh.com/">my wiki)</a>
-            </p>
+            <div className="font-mono text-xl my-2 h-20">
+              <TypedText
+                strings={[
+                  "Hi, I'm Rob",
+                  "Thanks for visiting",
+                  "I'm a software engineer with an interest\nin making software which ages well",
+                ]}
+              />
+            </div>
+            <div className="flex flex-row items-center my-8">
+              <a className="m-1" href="https://github.com/robmurtagh">
+                <img alt="github-profile" src="/profile-github.png" height="20" width="20"></img>
+              </a>
+              <a className="m-1" href="https://twitter.com/rjmurtagh">
+                <img alt="twitter-profile" src="/profile-twitter.svg" height="20" width="20"></img>
+              </a>
+              <a className="m-1" href="http://wiki.robmurtagh.com/">
+                <img alt="wiki-profile" src="/profile-wiki.svg" height="24" width="24"></img>
+              </a>
+            </div>
           </div>
         </div>
         <div className="m-8">
-          <h2 className="font-bold text-2xl md:text-3xl">Posts</h2>
+          <h2 className="font-bold text-3xl">Blog posts</h2>
+          <div className="prose prose-blue mt-4 mb-8 text-sm">
+            Ocassionally I try to write not <i>too</i> much about things I&apos;ve considered too much not to write
+            about...
+          </div>
           <ul>
             {posts.map((post) => (
-              <li key={post.filePath}>
-                <Link as={`/posts/${post.filePath.replace(/\.mdx?$/, "")}`} href={`/posts/[slug]`}>
-                  <a>{post.data.title}</a>
+              <li key={post.filePath} className="pl-4 py-4 my-5 rounded-lg shadow-md">
+                <Link as={`/posts/${post.filePath.replace(/\.mdx?$/, "")}`} href={`/posts/[slug]`} passHref>
+                  <a>
+                    <h3 className="font-bold text-lg">{post.data.title}</h3>
+                    <p>{post.data.date}</p>
+                  </a>
                 </Link>
               </li>
             ))}

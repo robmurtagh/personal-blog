@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { content, data } = matter(source);
 
   const mdxSource = await serialize(content, {
-    // Optionally pass remark/rehype plugins
+    /** Optionally pass remark/rehype plugins */
     mdxOptions: {
       remarkPlugins: [],
       rehypePlugins: [],
