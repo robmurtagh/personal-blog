@@ -1,18 +1,19 @@
 import "katex/dist/katex.min.css";
 import fs from "fs";
+import path from "path";
 import matter from "gray-matter";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
-import path from "path";
-import { postFilePaths, POSTS_PATH } from "@/utils/mdxUtils";
 import type { GetStaticPaths, GetStaticProps } from "next";
-import { BlogPostFrontMatter } from "..";
+import { InlineMath } from "react-katex";
+import { BlogPostFrontMatter } from "@/pages/index";
+import { postFilePaths, POSTS_PATH } from "@/utils/mdxUtils";
 import Code from "@/components/Code";
 import Panel from "@/components/Panel";
 import VideoAutoplay from "@/components/VideoAutoplay";
+import BlockMathWithOverflowScroll from "@/components/BlockMathWithOverflowScroll";
 
 /**
  * This is a map which is passed to `MDXRemote`. Every time a
@@ -38,8 +39,8 @@ const components: Record<string, React.ReactNode> = {
   img: ({ src, alt }) => <img src={src} alt={alt} className="w-full" />,
   code: Code,
   VideoAutoplay,
-  InlineMath: dynamic(() => import("react-katex").then((mod) => mod.InlineMath)),
-  BlockMath: dynamic(() => import("react-katex").then((mod) => mod.BlockMath)),
+  InlineMath,
+  BlockMath: BlockMathWithOverflowScroll,
   Panel,
 };
 

@@ -58,8 +58,8 @@ export default function Index({ posts }: IndexProps) {
         <div className="flex flex-column flex-wrap pt-10">
           <SphereAnimation className="m-8" />
           <div className="m-8 flex flex-col justify-center">
-            <h1 className="font-bold text-5xl md:text-6xl mb-3">Welcome 👋</h1>
-            <div className="font-mono text-xl my-2 h-20">
+            <h1 className="font-bold text-4xl md:text-6xl mb-3">Welcome 👋</h1>
+            <div className="font-mono text-xl my-2 h-28 md:h-20">
               <TypedText
                 strings={[
                   "Hi, I'm Rob",
@@ -82,21 +82,25 @@ export default function Index({ posts }: IndexProps) {
           </div>
         </div>
         <div className="m-8">
-          <h2 className="font-bold text-3xl">Blog posts</h2>
+          <h2 className="font-bold text-xl md:text-3xl">Blog posts</h2>
           <div className="prose prose-blue mt-4 mb-8 text-sm">
-            Ocassionally I try to write not <i>too</i> much about things I&apos;ve considered too much not to write
-            about...
+            Ocassionally I try to write not <i>too</i> much...
           </div>
           <ul>
             {posts.map((post) => (
-              <li key={post.filePath} className="pl-4 py-4 my-5 rounded-lg shadow-md">
-                <Link as={`/posts/${post.filePath.replace(/\.mdx?$/, "")}`} href={`/posts/[slug]`} passHref>
-                  <a>
+              <Link
+                key={post.filePath}
+                as={`/posts/${post.filePath.replace(/\.mdx?$/, "")}`}
+                href={`/posts/[slug]`}
+                passHref
+              >
+                <a>
+                  <li className="pl-4 py-4 my-5 rounded-lg shadow-md">
                     <h3 className="font-bold text-lg">{post.data.title}</h3>
-                    <p>{post.data.date}</p>
-                  </a>
-                </Link>
-              </li>
+                    <p className="text-gray-700 text-sm">{post.data.date}</p>
+                  </li>
+                </a>
+              </Link>
             ))}
           </ul>
         </div>

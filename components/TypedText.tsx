@@ -27,9 +27,5 @@ export default function TypedText({ strings }: { strings: string[] }) {
     };
   }, [strings]);
 
-  return (
-    <div className="type-wrap">
-      <span style={{ whiteSpace: "pre" }} ref={domElement} />
-    </div>
-  );
+  return <span className="whitespace-normal" ref={domElement} />;
 }
