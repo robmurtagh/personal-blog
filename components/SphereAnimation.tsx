@@ -31,24 +31,24 @@ export default function SphereAnimation({ className }: { className: string }) {
           perspective:1000px;
       }
       @keyframes rotate1 {
-          0%  {transform:rotate3d(1,1,1, 90deg)}
-          50% {transform:rotate3d(1,1,1,270deg)}
-          100%{transform:rotate3d(1,1,1,450deg)}
+          0%  {transform:rotate3d(1,1,1,  0deg)}
+          50% {transform:rotate3d(1,1,1,180deg)}
+          100%{transform:rotate3d(1,1,1,360deg)}
       }
       @keyframes rotate2 {
-          0%  {transform:rotate3d(1,1,0, 20deg)}
-          50% {transform:rotate3d(1,1,0,200deg)}
-          100%{transform:rotate3d(1,1,0,380deg)}
+          0%  {transform:rotate3d(1,1,0,  0deg)}
+          50% {transform:rotate3d(1,1,0,180deg)}
+          100%{transform:rotate3d(1,1,0,360deg)}
       }
       @keyframes rotate3 {
-          0%  {transform:rotate3d(1,0,1, 70deg)}
-          50% {transform:rotate3d(1,0,1,250deg)}
-          100%{transform:rotate3d(1,0,1,430deg)}
+          0%  {transform:rotate3d(1,0,1,  0deg)}
+          50% {transform:rotate3d(1,0,1,180deg)}
+          100%{transform:rotate3d(1,0,1,360deg)}
       }
       @keyframes rotate4 {
-          0%  {transform:rotate3d(0,1,1, 80deg)}
-          50% {transform:rotate3d(0,1,1,260deg)}
-          100%{transform:rotate3d(0,1,1,440deg)}
+          0%  {transform:rotate3d(0,1,1,  0deg)}
+          50% {transform:rotate3d(0,1,1,180deg)}
+          100%{transform:rotate3d(0,1,1,360deg)}
       }
       @keyframes rotate5 {
           0%  {transform:rotate3d(1,1,0,  0deg)}
@@ -56,12 +56,12 @@ export default function SphereAnimation({ className }: { className: string }) {
           100%{transform:rotate3d(1,1,0,360deg)}
       }
       @keyframes rotate6 {
-          0%  {transform:rotate3d(0,1,1, 10deg)}
-          50% {transform:rotate3d(0,1,1,190deg)}
-          100%{transform:rotate3d(0,1,1,370deg)}
+          0%  {transform:rotate3d(0,1,1,  0deg)}
+          50% {transform:rotate3d(0,1,1,180deg)}
+          100%{transform:rotate3d(0,1,1,360deg)}
       }`}
       </style>
-      <div className="outer-disc" style={{ animationName: "rotate1", animationDuration: "3.2s" }}></div>
+      <div className="outer-disc" style={{ animationName: "rotate1", animationDuration: "5.2s" }}></div>
       <div className="outer-disc" style={{ animationName: "rotate2", animationDuration: "4.3s" }}></div>
       <div className="outer-disc" style={{ animationName: "rotate3", animationDuration: "3.5s" }}></div>
       <div className="inner-disc" style={{ animationName: "rotate4", animationDuration: "3.8s" }}></div>
