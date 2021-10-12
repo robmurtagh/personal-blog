@@ -64,7 +64,7 @@ export default function Index({ posts }: IndexProps) {
                 strings={[
                   "Hi, I'm Rob",
                   "Thanks for visiting",
-                  "I'm a software engineer with an interest\nin making software which ages well",
+                  "I'm a software engineer with an interest\nin software that ages well, and the teams\nthat make it",
                 ]}
               />
             </div>
@@ -86,7 +86,7 @@ export default function Index({ posts }: IndexProps) {
           <div className="prose prose-blue mt-4 mb-8 text-sm">
             Ocassionally I try to write not <i>too</i> much...
           </div>
-          <ul>
+          <ul className="my-5">
             {posts.map((post) => (
               <Link
                 key={post.filePath}
@@ -95,7 +95,7 @@ export default function Index({ posts }: IndexProps) {
                 passHref
               >
                 <a>
-                  <li className="pl-4 py-4 my-5 rounded-lg shadow-md">
+                  <li className="pl-4 py-4 rounded-lg shadow-md">
                     <h3 className="font-bold text-lg">{post.data.title}</h3>
                     <p className="text-gray-700 text-sm">{post.data.date}</p>
                   </li>
