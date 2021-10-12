@@ -64,7 +64,7 @@ export default function Index({ posts }: IndexProps) {
                 strings={[
                   "Hi, I'm Rob",
                   "Thanks for visiting",
-                  "I'm a software engineer with an interest\nin software that ages well, and the teams\nthat make it",
+                  "I'm an engineer with an interest\nin software which ages well, and the teams\nthat build it",
                 ]}
               />
             </div>
@@ -86,22 +86,21 @@ export default function Index({ posts }: IndexProps) {
           <div className="prose prose-blue mt-4 mb-8 text-sm">
             Ocassionally I try to write not <i>too</i> much...
           </div>
-          <ul className="my-5">
-            {posts.map((post) => (
-              <Link
-                key={post.filePath}
-                as={`/posts/${post.filePath.replace(/\.mdx?$/, "")}`}
-                href={`/posts/[slug]`}
-                passHref
-              >
-                <a>
-                  <li className="pl-4 py-4 rounded-lg shadow-md">
-                    <h3 className="font-bold text-lg">{post.data.title}</h3>
-                    <p className="text-gray-700 text-sm">{post.data.date}</p>
-                  </li>
-                </a>
-              </Link>
-            ))}
+          <ul>
+            {posts
+              .sort((first, second) => second.data.date.localeCompare(first.data.date)) // order by date descending
+              .map((post) => (
+                <li key={post.filePath} className="my-6">
+                  <Link as={`/posts/${post.filePath.replace(/\.mdx?$/, "")}`} href={`/posts/[slug]`} passHref>
+                    <a>
+                      <div className="pl-4 py-4 rounded-lg shadow-md">
+                        <h3 className="font-bold text-lg">{post.data.title}</h3>
+                        <p className="text-gray-700 text-sm">{post.data.date}</p>
+                      </div>
+                    </a>
+                  </Link>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

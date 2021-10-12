@@ -14,8 +14,8 @@ Here is a (square, two-dimensional) matrix, <InlineMath math="A" />:
 
 <BlockMath
   math="A=\begin{pmatrix}
-   2 & 1 \\
-   2 & 3
+   1 & 2 \\
+   3 & 4
 \end{pmatrix}"
 />
 
@@ -32,35 +32,35 @@ It can be transformed by applying some matrix to it:
 
 <BlockMath
   math="\vec{b}=A \cdot \vec{a}=\begin{pmatrix}
-   2 & 1 \\
-   2 & 3
+   1 & 2 \\
+   3 & 4
 \end{pmatrix} \cdot \begin{pmatrix}
    1 \\
    1 
 \end{pmatrix} = \begin{pmatrix}
-   2 \cdot 1 + 1 \cdot 1 \\
-   2 \cdot 1 + 3 \cdot 1 
+   1 \cdot 1 + 2 \cdot 1 \\
+   3 \cdot 1 + 4 \cdot 1 
 \end{pmatrix} = \begin{pmatrix}
    3 \\
-   5 
+   7 
 \end{pmatrix}"
 />
 
 The new vector <InlineMath math="\vec{b}" /> is called the _dot product_ of the matrix and the original vector. And here's what the transformation process looks like:
 
-<VideoAutoplay src="/1-transforming-a-vector.mp4" />
+<VideoAutoplay src="/eigen-1-transforming-a-vector.mp4" />
 
 ## What is an eigenvector?
 
 To start answering that, first of all let's imagine applying this matrix to every possible vector in a space. Here's one example of what that might look like:
 
-<VideoAutoplay src="/2-transforming-all-vectors.mp4" />
+<VideoAutoplay src="/eigen-2-transforming-all-vectors.mp4" />
 
-Hopefully, looking at this, it's quite easy to notice that _in some directions the vector is only stretched_.
+Hopefully, looking at this, it's noticeable that in some directions the vectors are _stretched_ (maybe even inverted), but not _skewed_. I've marked those directions with blue arrows:
 
-<VideoAutoplay src="/2-transforming-all-vectors.mp4" />
+<VideoAutoplay src="/eigen-3-transforming-all-vectors-with-overlay.mp4" />
 
-These directions are called the eigenvectors of the matrix.
+These blue arrows are the directions of the eigenvectors of the matrix.
 
 ## An intuition
 
