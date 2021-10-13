@@ -81,7 +81,7 @@ export default function Index({ posts }: IndexProps) {
             </div>
           </div>
         </div>
-        <div className="m-8">
+        <div className="m-8 pb-12">
           <h2 className="font-bold text-xl md:text-3xl">Blog posts</h2>
           <div className="prose prose-blue mt-4 mb-8 text-sm">
             Ocassionally I try to write not <i>too</i> much...
