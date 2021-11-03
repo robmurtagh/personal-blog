@@ -1,0 +1,49 @@
+---
+title: Happy path programming
+description: "What can we learn from notebook programming?"
+date: "2021-11-02"
+---
+
+Like many engineers, I've spent time working with the programming language Python and with interactive [Jupyter Notebooks](https://jupyter.org/). Together, these two tools are the industry-standard toolkit for Data Science and Machine Learning. I really enjoy the interactive nature of notebook coding; but one of the reasons I've focused my career towards software engineering - rather than other specialties - is because I've observed that many organisations have their biggest problem with the quality of their engineering, rather than the ingenuity of their analyses.
+
+In the back of my mind, this always leaves a big unanswered question:
+
+<PullQuote>
+
+_How do we close the gap between code experiments, and robust software?_
+
+</PullQuote>
+
+I'd like to think about that question in the abstract, and focus on a couple of long-term directions of travel.
+
+## Notebook programming
+
+Firstly, what does notebook programming look like in the abstract? I'd characterise it as having a few properties:
+
+- **Startpoint** - Typically a 'single' known input, such as a CSV or dataset
+- **Endpoint** - Some desired output, such as a chart or trained model
+- **Process** - An iterative process of finding a path between the two
+
+![Animated gradual creation of a path between an input point and output point](/notebooks-1-process.gif)
+
+That intentionally oversimplifies a lot! In particaular there are often many hidden inputs, like REST APIs or other enrichment dependencies. Those dependencies are alive and working at the point the notebook is created, and so they are broadly treated as additional 'known' inputs. The 'desired output' may also not be clearly defined at the start, since the work is often investigative. We might only know the 'endpoint' when we reach it.
+
+Broadly, though once the notebook process has been completed, we have our happy path, but we probably shouldn't stray from it:
+
+![Path between an input point and output point with fire and mountains either side](/notebooks-2-outcome.png)
+
+## Software programming
+
+The goal production-ready software is to widen the set of happy paths available. To be more resilient to unexpected inputs, and to produce some desired output a greater percentage of the time:
+
+![Paths between many input points and a single output point](/notebooks-3-software.png)
+
+We rarely get it this correct! 😰
+
+## Problems to be solved
+
+Now it's extremely hard to
+
+### A smarter compile-time?
+
+### A smarter run-time?

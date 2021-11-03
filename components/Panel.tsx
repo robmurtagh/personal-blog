@@ -1,5 +1,5 @@
 /**
- * Autoplay an mp4 video inline with the article
+ * A visually raised panel for summaries etc
  */
 export default function Panel({ children }) {
   return (

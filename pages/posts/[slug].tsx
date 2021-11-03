@@ -12,6 +12,7 @@ import { BlogPostFrontMatter } from "@/pages/index";
 import { postFilePaths, POSTS_PATH } from "@/utils/mdxUtils";
 import Code from "@/components/Code";
 import Panel from "@/components/Panel";
+import PullQuote from "@/components/PullQuote";
 import VideoAutoplay from "@/components/VideoAutoplay";
 import BlockMathWithOverflowScroll from "@/components/BlockMathWithOverflowScroll";
 
@@ -42,6 +43,7 @@ const components: Record<string, React.ReactNode> = {
   InlineMath,
   BlockMath: BlockMathWithOverflowScroll,
   Panel,
+  PullQuote,
 };
 
 /**
