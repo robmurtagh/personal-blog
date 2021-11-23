@@ -1,12 +1,12 @@
 ---
-title: Happy path programming
+title: Happy path programming (Part 1)
 description: "What can we learn from notebook programming?"
-date: "2021-11-02"
+date: "2021-10-20"
 ---
 
 Like many engineers, I've spent time working with the programming language Python and with interactive [Jupyter Notebooks](https://jupyter.org/). Together, these two tools are the industry-standard toolkit for Data Science and Machine Learning. I really enjoy the interactive nature of notebook coding; but one of the reasons I've focused my career towards software engineering - rather than other specialties - is because I've observed that many organisations have their biggest problem with the quality of their engineering, rather than the ingenuity of their analyses.
 
-In the back of my mind, this always leaves a big unanswered question:
+In the back of my mind though, this always leaves a big unanswered question:
 
 <PullQuote>
 
@@ -14,9 +14,9 @@ _How do we close the gap between code experiments, and robust software?_
 
 </PullQuote>
 
-I'd like to think about that question in the abstract, and focus on a couple of long-term directions of travel.
+In this part of the post, I'd like to start by summarising the problem.
 
-## Notebook programming
+## Notebook programming - it's about the process
 
 Firstly, what does notebook programming look like in the abstract? I'd characterise it as having a few properties:
 
@@ -26,13 +26,16 @@ Firstly, what does notebook programming look like in the abstract? I'd character
 
 ![Animated gradual creation of a path between an input point and output point](/notebooks-1-process.gif)
 
-That intentionally oversimplifies a lot! In particaular there are often many hidden inputs, like REST APIs or other enrichment dependencies. Those dependencies are alive and working at the point the notebook is created, and so they are broadly treated as additional 'known' inputs. The 'desired output' may also not be clearly defined at the start, since the work is often investigative. We might only know the 'endpoint' when we reach it.
+That intentionally oversimplifies a lot! Amongst other things:
 
-Broadly, though once the notebook process has been completed, we have our happy path, but we probably shouldn't stray from it:
+- There are often many hidden inputs, like REST APIs or other enrichment dependencies. Those dependencies are alive and working at the point the notebook is created, and so they are broadly treated as additional 'known' inputs
+- The 'desired output' may also not be clearly defined at the start, since the work is often investigative. We might only know the 'endpoint' when we reach it.
+
+Broadly, once the notebook process has been completed, we have our happy path, but we probably shouldn't stray from it:
 
 ![Path between an input point and output point with fire and mountains either side](/notebooks-2-outcome.png)
 
-## Software programming
+## Software programming - it's about the destination
 
 The goal production-ready software is to widen the set of happy paths available. To be more resilient to unexpected inputs, and to produce some desired output a greater percentage of the time:
 
@@ -40,10 +43,6 @@ The goal production-ready software is to widen the set of happy paths available.
 
 We rarely get it this correct! 😰
 
-## Problems to be solved
+## ⏳ Next time
 
-Now it's extremely hard to
-
-### A smarter compile-time?
-
-### A smarter run-time?
+In [Part 2](/posts/2021-11-22-happy-path-programming-pt-2) of this post, I'll lay out a few of my own disparate ideas about how we could think about bridging the gap between these two software development styles.

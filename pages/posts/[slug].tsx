@@ -113,12 +113,12 @@ export default function PostPage({ source, frontMatter }: PostPageProps) {
             </Link>
           </nav>
         </header>
-        <article className="prose prose-blue mb-20">
+        <article className="mb-20">
           <header>
-            <h1>{frontMatter.title}</h1>
-            <h4 className="italic">{frontMatter.description}</h4>
+            <h1 className="font-bold text-4xl pb-4">{frontMatter.title}</h1>
+            <h4 className="font-mono pb-14">{frontMatter.description}</h4>
           </header>
-          <main>
+          <main className="prose prose-blue">
             <MDXRemote {...source} components={components} />
           </main>
         </article>
