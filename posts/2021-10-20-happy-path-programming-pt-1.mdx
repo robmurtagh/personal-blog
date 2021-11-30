@@ -41,7 +41,9 @@ The goal production-ready software is to widen the set of happy paths available.
 
 ![Paths between many input points and a single output point](/notebooks-3-software.png)
 
-We rarely get it this correct! 😰
+We want to be able to get to a rational output even when one of our inputs or dependencies isn't working in the way we'd expect. This 'rational output' may simply be an error message, but generating it correctly matters.
+
+From this perspective, we can state the problem as: how can we interactively pursue our happy path, while at the same time ensuring we eventually deliver a wide set of well-handled code paths?
 
 ## ⏳ Next time
 
