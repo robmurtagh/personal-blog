@@ -4,6 +4,180 @@ description: "What can we learn from notebook programming?"
 date: "2021-11-22"
 ---
 
-This is a placeholder for the follow-up article to [Happy path programming (Part 1)](/posts/2021-10-20-happy-path-programming-pt-1).
+This is a follow-up to [Happy path programming (Part 1)](/posts/2021-10-20-happy-path-programming-pt-1), where I considered what makes Data Science 'notebook programming' different from production 'software programming'. The notes I've made here are mostly unstructured, and really are more like a shopping list 🛒 of ideas which I'd be interested to explore in future.
 
-I haven't gotten around to writing it yet!
+If there's a summary to my thoughts, it would be that "_[simple things should be simple, complex things should be possible](https://en.wikiquote.org/wiki/Alan_Kay)_". Unfortunately, what I actually see right now is:
+
+- Some languages for which _simple things are simple, and complex things impossible_. For example Python, Javascript, Java
+- Some languages for which _simple things are difficult, but complex things possible_. For example Haskell, OCaml
+
+<Panel>
+
+In this post, I'd like to use a couple of terms with only an approximation of their full definition:
+
+**"_Compile-time_" or "_Static_"?**
+
+Roughly, I mean the set of 'facts' that can be deduced about the values being passed around in a program, by **only** reading its source code. For example, by reading some code we might know that a 'data table' will be passed around at 'run-time'.
+
+**"_Run-time_" or "_Dynamic_" ?**
+
+Roughly, I mean the actual values which end up being passed around in the program when it actually runs. For example in a notebook, this might be an actual instance of a 'data table', which might have e.g. 4 columns (each with a specific, known name) and 100 rows (each with a specific, known value).
+
+</Panel>
+
+---
+
+## 🛒 Data ergonomics
+
+This is an area where I think languages have to deliver. Manipulation of known or unknown data is a core requirement in data science and modern programming. I've found that many languages promise a lot, but are so hard to use for simple data transformations, that only the most hardy users ever make it past the door.
+
+For starters, my own personal bias is that _anyone_ would benefit from the maximum possible static [type](https://en.wikipedia.org/wiki/Data_type) information being available when writing code. I'd love every developer — at least once — to experience the power of a supportive type-system which is truly helping them write bug-free code. When writing the following code, I have autocompletion, hints and descriptions for every property, since the compiler already knows about the values I'm passing around:
+
+<VideoAutoplay src="/notebooks2-1-editor-support.mp4" />
+
+But in order to make types ergonomic, I think it can be extremely useful to have the 'get out of your way' when you need to. A really nice example of this is [optional chaining, nullish colaescing](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html) and the [non-null assertion operator](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator) in Typescript:
+
+```typescript
+/** An Author maybe has a name */
+type Author = { name: Maybe<string> };
+/** A Book has a name and maybe an Author */
+type Book = { name: string; author: Maybe<Author> };
+
+const catch22: Book = {
+  name: "Catch 22",
+  author: { name: "Joseph Heller" }
+};
+
+const bible: Book = {
+  name: "Bible",
+  author: null
+};
+
+/** Will have value: "Joseph Heller", type: Maybe<string> */
+const catch22Author = catch22?.author?.name;
+
+/** Will have value: "Unknown Author", type: Maybe<string> */
+const bibleAuthor = bible?.author.?.name ?? "Unknown Author";
+
+/** Will have value: "Joseph Heller", type: string */
+const Author = catch22!.author!.name;
+```
+
+There features, are incredibly useful in Typescript when temporarily wanting to consider only the 'happy path' of the function. It is equivalent to saying to the compiler: "_I know about this value, don't get in my way_".
+
+<Collapsible header="More thoughts">
+
+As an aside, one issue I dislike here is how non-null assertions 'infect' a codebase. If we assert a value to be non-null in one place, then the compiler will treat every callsite as non-null, and they'll all become vulnerable to failures. I wonder if instead we could do something like limiting the non-null assertion to [lexical scope](<https://en.wikipedia.org/wiki/Scope_(computer_science)#Lexical_scope_vs._dynamic_scope>), so a value would be treated as non-null within a function/closure, but any caller using that function would still have to handle the null case. An example would be:
+
+```typescript
+function getAuthorName(author: Author): Maybe<string> {
+  /** This value is of type string (not Maybe<string>) */
+  const name = author!.name;
+  /** And so we can use it as a string here */
+  printStringStrict(name);
+  /** But when returning it outside of our lexical scope, the compiler knows it's still a `Maybe<string>` */
+  return name;
+}
+```
+
+</Collapsible>
+
+## 🛒 Code generators
+
+In order to let the compiler support us when we're programming, we need to find a way to tell it information about the values that we're going to handle in our program. I'm almost always suprised how difficult this is.
+
+A few examples of code generators which would be useful:
+
+- Type generators based on static data (e.g. CSV, JSON)
+- Type generators based on Rest API responses
+- Code generators which create parsers for those types
+- Code generators for creating utility functions over those types
+
+For example, wouldn't it be useful if our language or 'notebook' could inspect a CSV file, and tell us that the data frame we've created will have e.g. 4 columns, each with an inferred type?
+
+<Collapsible header="More thoughts">
+
+Haskell and many other languages support this idea of moving from values into types (although that isn't quite what's shown in the snippet below), for example with [Template Haskell](https://en.wikipedia.org/wiki/Template_Haskell) and [Lenses](https://hackage.haskell.org/package/lens). But as with the discussion on 'data ergonomics', it's pretty cryptic (Why do fields have to start with `_`? What does the `''` mean before `User`? How do we handle field name clashes?):
+
+```hs
+{-# LANGUAGE TemplateHaskell #-}
+import Control.Lens
+
+data Author = Author {
+    _authorId :: Int
+  , _firstName :: String
+  , _lastName :: String
+}
+
+makeLenses ''User
+
+-- We'll now have utility functions available for interacting with Author types
+```
+
+</Collapsible>
+
+## 🛒 Exceptions
+
+There are lots of problems with exceptions, and you don't have to do much googling to find people talking about them. Here's some example code:
+
+```ts
+const response = await fetch("https://www.foo.com/data");
+const result = extractResult(response);
+```
+
+The compiler can help us avoid errors in this sort of code. By adding compiler annotations, we could let the compiler infer the type of `response` and `result`. But what compilers generally don't do is tells us where exceptions might be thrown. Most programming languages throw [unchecked expections](https://www.baeldung.com/java-checked-unchecked-exceptions), which the compiler does not force us to handle.
+
+But why doesn't the compiler force us to handle exceptions? Well, without having read too much on this topic, I'd imagine:
+
+- Exception handling is boiler-plate heavy - amongst other things they are handled with 'statements' rather than 'expressions'
+- Exceptions don't compose well - how do we handle the case where running an operation on each element of a list yeilds some errors and some values?
+
+All of which means that we don't want to force users to handle every possible exception. In principle an exception should only be used if you want your program execution to terminate, but the reality is that they're already used for control flow, and we've simply accepted that it's not ergonomic to enfore compiler checks on this control flow.
+
+<Collapsible>
+
+As an aside, in the defence of exceptions, they do have the interesting property that as well as an error message they contain the execution stack-trace of the point at which they occurred. In functional programming, the advice is to avoid exceptions at all costs and to use [referentially transparent](https://en.wikipedia.org/wiki/Referential_transparency) data types such as `Either`. But stack-traces are really useful as a user.
+
+At the risk of huge cost and magic, I wonder if languages could support some of this behaviour, for example, that an instance of `Error` could preserve a strack-trace.
+
+````ts
+// weird-example.ts
+type Result<T> = { result: T };
+type Error = { message: string; trace: StackTrace };
+type Either<T> = Error | Result<T>;
+
+function generateError(): Either<T> {
+  return Error("I'm a generated error");
+}
+
+let error = generateError();
+
+/**
+ * The following line could print something like:
+ * ```
+ * Error: {
+ *   message: "I'm a generated error"
+ *   trace: "at generateError (/weird-example.ts:6:10)"
+ * }
+ * ```
+ */
+print(error);
+````
+
+</Collapsible>
+
+## 🛒 Concurrency
+
+For me, the number one failing of Python is how challenging it is to write concurrent code. Most code written in Python is [synchronous](https://www.outsystems.com/blog/posts/asynchronous-vs-synchronous-programming/) and blocking (with a [global interpreter lock](https://realpython.com/python-gil/)).
+
+Typically a data scientist might write a notebook - used only by them - in which the concurrency problem never appears, but then 'deploy' their work as some kind of webserver. As soon as more than one request is received simultaneously, the application becomes unusably slow.
+
+I won't go into detail here, but I think any 'notebook programming' system of the future should have much better support for runtime concurrency ([something which is also being worked on in Python of course](https://realpython.com/async-io-python/)).
+
+## 🛒 Incrementalism
+
+This idea is the most far-fetched 😅
+
+Another big issue I see in notebooks programming is that cells get executed out of order, and therefore results can't easily be reproduced.
+
+One idea for how this could be avoided is that each value could incrementally update, like a spreadsheet. The implications of making every value reactive - particularly when IO or side-effects are involved - is huge though, and something I'll leave for another day!

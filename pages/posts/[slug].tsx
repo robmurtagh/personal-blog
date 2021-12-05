@@ -13,6 +13,7 @@ import { postFilePaths, POSTS_PATH } from "@/utils/mdxUtils";
 import Code from "@/components/Code";
 import Panel from "@/components/Panel";
 import PullQuote from "@/components/PullQuote";
+import Collapsible from "@/components/Collapsible";
 import VideoAutoplay from "@/components/VideoAutoplay";
 import BlockMathWithOverflowScroll from "@/components/BlockMathWithOverflowScroll";
 
@@ -44,6 +45,7 @@ const components: Record<string, React.ReactNode> = {
   BlockMath: BlockMathWithOverflowScroll,
   Panel,
   PullQuote,
+  Collapsible,
 };
 
 /**
