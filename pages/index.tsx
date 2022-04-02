@@ -76,7 +76,10 @@ export default function Index({ posts }: IndexProps) {
                 <img alt="twitter-profile" src="/profile-twitter.svg" height="20" width="20"></img>
               </a>
               <a className="m-1" href="http://wiki.robmurtagh.com/">
-                <img alt="wiki-profile" src="/profile-wiki.svg" height="24" width="24"></img>
+                <img alt="wiki-profile" src="/profile-wiki.svg" height="26" width="26"></img>
+              </a>
+              <a className="m-1" href="https://stackoverflow.com/users/3052692/rjmurt">
+                <img alt="stackoverflow-profile" src="/profile-stackoverflow.svg" height="20" width="20"></img>
               </a>
             </div>
           </div>
