@@ -21,7 +21,7 @@ import BlockMathWithOverflowScroll from "@/components/BlockMathWithOverflowScrol
  * This is a map which is passed to `MDXRemote`. Every time a
  * 'tag' is utilised in our `mdx` posts, there is a lookup in
  * this map to see which component we should render. The docs
- * for which 'tags' there are are [here](https://mdxjs.com/getting-started#table-of-components).
+ * for which 'tags' there are are [here](https://mdxjs.com/table-of-components/).
  *
  * Conditional loading would be handled with:
  * ```ts
@@ -39,6 +39,7 @@ const components: Record<string, React.ReactNode> = {
     </Link>
   ),
   img: ({ src, alt }) => <img src={src} alt={alt} className="w-full" />,
+  blockquote: ({ children }) => <blockquote className="not-prose font-normal">{children}</blockquote>,
   code: Code,
   VideoAutoplay,
   InlineMath,
